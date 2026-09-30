@@ -1,4 +1,5 @@
 #include <LiquidCrystal.h>
+#include "secrets.h"
 #include "DHT.h"
 #define DHTPIN 7
 #include <OneWire.h>
@@ -62,7 +63,7 @@ void loop()
   if(cnt>15)
   {
     cnt=0;
-  Serial.print("682490,THINGSPEAK_WRITE_API_KEY,0,0,SRC 24G,src@internet,"+String(tempC) + "," +String(tval) +"," +String(hval)+","+ String(rt)+"," + String(thval)+"," + String(pval)+"," + String(rpm)+",0\n");
+  Serial.print("3516531," THINGSPEAK_WRITE_API_KEY"0,0,SRC 24G,src@internet,"+String(tempC) + "," +String(tval) +"," +String(hval)+","+ String(rt)+"," + String(thval)+"," + String(pval)+"," + String(rpm)+",0\n");
     }
 
     xx=0;

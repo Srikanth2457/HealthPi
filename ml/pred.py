@@ -7,7 +7,7 @@ import requests
 MODEL_PATH = os.getenv("MODEL_PATH", "vehicle_monitoring_model.pkl")
 THINGSPEAK_URL = os.getenv(
     "THINGSPEAK_URL",
-    "https://api.thingspeak.com/channels/682490/feeds.json?results=1",
+    "https://api.thingspeak.com/channels/3516531/feeds.json?results=1",
 )
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
@@ -17,6 +17,10 @@ def get_thingspeak_data():
     response = requests.get(THINGSPEAK_URL, timeout=10)
     response.raise_for_status()
     data = response.json()
+    if not data.get("feeds"):
+        print("No ThingSpeak data available yet.")
+        return None
+
     feeds = data["feeds"][0]
 
     engine_temp = float(feeds["field1"])
@@ -55,6 +59,9 @@ def main():
     while True:
         try:
             input_data = get_thingspeak_data()
+            if input_data is None:
+                time.sleep(20)
+                continue
             prediction = model.predict(input_data)[0]
             status_message = status_from_prediction(prediction)
             print(status_message)

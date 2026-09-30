@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+
+# Secrets / environment
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and generated output
+*.log
+reports/
+uploads/
+
+# Local/generated ML files (uncomment if you do not want to track them)
+# ml/vehicle_monitoring_data.csv
+# ml/vehicle_monitoring_model.pkl

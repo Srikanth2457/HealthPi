@@ -1,0 +1,38 @@
+name: HealthPi CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Compile Python files
+        run: python -m py_compile ml/*.py
+
+      - name: Run smoke tests
+        run: python -m pytest -q
+
+      - name: Generate sample dataset
+        working-directory: ml
+        run: python ds.py
+
+      - name: Train model
+        working-directory: ml
+        run: python train.py
